@@ -1,5 +1,7 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.exception.DatabaseConnecionException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,11 +29,11 @@ public class Util {
 
         } catch (FileNotFoundException e) {
             LOGGER.severe("Не найден файл с настройками для доступа к базе данных");
-            throw new IllegalStateException("Не удалось найти конфигурацию для " +
+            throw new DatabaseConnecionException("Не удалось найти конфигурацию для " +
                     "подключения к баз данных", e);
         } catch (IOException e) {
             LOGGER.severe("Не удалось загрузить настройки для доступа к базе данных " + e.getMessage());
-            throw new IllegalStateException("Некорректная конфигурация для подключения к базе данных", e);
+            throw new DatabaseConnecionException("Некорректная конфигурация для подключения к базе данных", e);
         }
     }
 
@@ -45,7 +47,7 @@ public class Util {
         } catch (SQLException e) {
             LOGGER.severe("Не удалось установить соединение с базой данных" +
                     "проверьте пароль, логин, url");
-            throw new IllegalStateException("Ошибка при подключении к базе данных");
+            throw new DatabaseConnecionException("Ошибка при подключении к базе данных", e);
         }
     }
 

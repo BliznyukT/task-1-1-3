@@ -82,11 +82,11 @@ public class UserDaoJDBCImpl implements UserDao {
             try (PreparedStatement pstmt = conn.prepareStatement(SELECT_ALL);
                  ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
-                    users.add(new User(resultSet.getString("name"),
+                    users.add(new User(resultSet.getLong("id"),
+                            resultSet.getString("name"),
                             resultSet.getString("lastName"),
                             resultSet.getByte("age")));
                 }
-                users.forEach(System.out::println);
             } catch (SQLException e) {
                 rollbackTransaction(conn);
                 customExceptionHandler(e, "Не удалось получить список пользователей из users");
